@@ -1,11 +1,10 @@
 (function() {
-  function AddCtrl($alert, Show) {
-    var vm = this;
-    vm.addShow = function() {
-      Show.save({ showName: vm.showName },
+  function AddCtrl($scope, $alert, Show) {
+    $scope.addShow = function() {
+      Show.save({ showName: $scope.showName },
       function() {
-        vm.showName = '';
-        vm.addForm.$setPristine();
+        $scope.showName = '';
+        $scope.addForm.$setPristine();
         $alert({
           content: 'TV show has been added.',
           placement: 'top-right',
@@ -14,8 +13,8 @@
         });
       },
       function(response) {
-        vm.showName = '';
-        vm.addForm.$setPristine();
+        $scope.showName = '';
+        $scope.addForm.$setPristine();
         $alert({
           content: response.data.message,
           placement: 'top-right',
@@ -24,9 +23,9 @@
         });
       });
     };
-  }
+  };
 
-  AddCtrl.$inject = ['$alert', 'Show'];
+  AddCtrl.$inject = ['$scope', '$alert', 'Show'];
   angular
     .module('showtrackr')
     .controller('AddCtrl', AddCtrl);
