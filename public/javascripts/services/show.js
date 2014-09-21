@@ -1,6 +1,10 @@
 (function() {
   function Show($resource) {
-    return $resource('/api/shows/:_id');
+    var Show = {};
+    Show.query = function() {
+      return $resource('/api/shows/:_id');
+    };
+    return Show;
   }
 
   Show.$inject = ['$resource'];

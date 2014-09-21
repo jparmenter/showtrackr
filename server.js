@@ -3,8 +3,14 @@ var path = require('path');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+
+var configDb = require('./lib/config/database');
+
+mongoose.connect(configDb.url);
 
 var app = express();
+require('./lib/config/routes')(app);
 
 app.set('port', process.env.PORT || 3000);
 app.use(logger('dev'));
