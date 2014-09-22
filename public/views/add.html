@@ -1,15 +1,15 @@
-<div class="container" ng-controller="AddCtrl">
+<div class="container" ng-controller="AddCtrl as vm">
   <div class="panel panel-default">
     <div class="panel-heading">Add TV Show</div>
     <div class="panel-body">
-      <form class="form" method="post" ng-submit="addShow()" name="addForm">
-        <div class="form-group" ng-class="{ 'has-success' : addForm.showName.$valid && addForm.showName.$dirty, 'has-error' : addForm.showName.$invalid && addForm.showName.$dirty }">
-          <input type="text" class="form-control" name="showName" ng-model="showName" placeholder="Enter TV show name" required autofocus>
-          <div class="help-block text-danger" ng-if="addForm.showName.$dirty" ng-messages="addForm.showName.$error">
+      <form class="form-inline" method="post" ng-submit="vm.addShow()" name="addForm">
+        <div class="form-group" ng-class="{ 'has-success' : vm.addForm.showName.$valid && vm.addForm.showName.$dirty, 'has-error' : vm.addForm.showName.$invalid && vm.addForm.showName.$dirty }">
+          <input type="text" class="form-control" name="showName" ng-model="vm.showName" placeholder="Enter TV show name" required autofocus>
+          <div class="help-block text-danger" ng-if="vm.addForm.showName.$dirty" ng-messages="vm.addForm.showName.$error">
             <div ng-message="required">TV show name is required.</div>
           </div>
         </div>
-        <button class="btn btn-primary" type="submit" ng-disabled="addForm.$invalid">Add</button>
+        <button class="btn btn-primary" type="submit" ng-disabled="vm.addForm.$invalid">Add</button>
       </form>
     </div>
   </div>

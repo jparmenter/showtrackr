@@ -1,9 +1,10 @@
 (function() {
   function AddCtrl($scope, $alert, Show) {
-    $scope.addShow = function() {
-      Show.save({ showName: $scope.showName },
+    var vm = this;
+    vm.addShow = function() {
+      Show.save({ showName: vm.showName },
       function() {
-        $scope.showName = '';
+        vm.showName = '';
         $scope.addForm.$setPristine();
         $alert({
           content: 'TV show has been added.',
@@ -13,7 +14,7 @@
         });
       },
       function(response) {
-        $scope.showName = '';
+        vm.showName = '';
         $scope.addForm.$setPristine();
         $alert({
           content: response.data.message,

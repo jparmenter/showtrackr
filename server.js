@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express');
 var path = require('path');
 var logger = require('morgan');
@@ -5,10 +7,10 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
-var configDb = require('./lib/config/database');
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-mongoose.connect(configDb.url);
-
+var config = require('./lib/config/config');
+mongoose.connect(config.db);
 var app = express();
 
 app.set('port', process.env.PORT || 3000);
