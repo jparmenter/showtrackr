@@ -1,3 +1,4 @@
+'use strict';
 (function() {
   function MainCtrl(Show) {
     var vm = this;

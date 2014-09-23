@@ -1,3 +1,4 @@
+/*jshint loopfunc: true */
 'use strict';
 
 process.env.NODE_ENV = 'test';
@@ -10,7 +11,7 @@ beforeEach(function(done) {
       mongoose.connection.collections[i].remove(function() {});
     }
     return done();
-  };
+  }
 
   if (mongoose.connection.readyState === 0) {
     mongoose.connect(config.db, function(err) {

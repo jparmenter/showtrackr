@@ -1,3 +1,4 @@
+'use strict';
 (function() {
   function AddCtrl($scope, $alert, Show) {
     var vm = this;
@@ -24,7 +25,7 @@
         });
       });
     };
-  };
+  }
 
   AddCtrl.$inject = ['$scope', '$alert', 'Show'];
   angular

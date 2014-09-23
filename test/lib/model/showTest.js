@@ -1,6 +1,6 @@
 'use strict';
 
-var utils = require('../utils');
+require('../utils');
 var should = require('should');
 var Show = require('../../../lib/models/show');
 

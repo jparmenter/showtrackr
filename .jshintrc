@@ -1,0 +1,22 @@
+{
+  // Enforcing Options
+  "bitwise": true,
+  "camelcase": true,
+  "curly": true,
+  "eqeqeq": true,
+  "immed": true,
+  "indent": 2,
+  "latedef": true,
+  "newcap": true,
+  "noarg": true,
+  "quotmark": "single",
+  "undef": true,
+  "unused": true,
+  "strict": true,
+  "regexp": true,
+  "trailing": true,
+  "smarttabs": true,
+  // Environments
+  "browser": true,
+  "node": true
+}

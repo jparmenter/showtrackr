@@ -1,3 +1,4 @@
+'use strict';
 (function() {
   function DetailCtrl($rootScope, $routeParams, Show, Subscription) {
     var vm = this;
@@ -24,7 +25,7 @@
         return new Date(episode.firstAired) > new Date();
       })[0];
     });
-  };
+  }
 
   DetailCtrl.$inject = ['$rootScope', '$routeParams', 'Show', 'Subscription'];
   angular
