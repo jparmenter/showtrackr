@@ -25,8 +25,15 @@ module.exports = function(grunt) {
       all: ['Gruntfile.js', 'server.js', 'lib/**/*.js']
     },
     mochaTest: {
-      files: ['test/lib/**/*.js'],
-      tasks: ['mochaTest']
+      options: {
+        require: 'server.js'
+      },
+      src: ['test/lib/**/*.js']
+    },
+    env: {
+      test: {
+        NODE_ENV: 'test'
+      }
     },
     less: {
       development: {
@@ -50,6 +57,6 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('test', ['jshint', 'mochaTest']);
+  grunt.registerTask('test', ['jshint', 'env:test', 'mochaTest']);
   grunt.registerTask('build', ['less:development']);
 };
