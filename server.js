@@ -1,28 +1,54 @@
 'use strict';
 
+/**
+* Module dependencies
+*/
 var express = require('express');
-var path = require('path');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+var fs = require('fs');
 var mongoose = require('mongoose');
 
+/*
+* Main application entry file.
+* Please note that the order of loading is important
+*/
+
+// load configurations
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
+// system variables
 var config = require('./lib/config/config');
+var mongoose = require('mongoose');
+
+// Bootstrap db connection
 mongoose.connect(config.db);
+
+// Bootstrap models
+var modelsPath = './lib/models';
+var walkModels = function(path) {
+  fs.readdirSync(path).forEach(function(file) {
+    var newPath = path + '/' + file;
+    var stat = fs.statSync(newPath);
+    if (stat.isFile()) {
+      if (/(.*)\.(js$|coffee$)/.test(file)) {
+        require(newPath);
+      }
+    }
+    else if (stat.isDirectory()) {
+      walkModels(newPath);
+    }
+  });
+};
+walkModels(modelsPath);
+
+// require('./config/passport')(passport);
+
 var app = express();
 
-app.set('port', process.env.PORT || 3000);
-app.use(logger('dev'));
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+require('./lib/config/express')(app);
 require('./lib/config/routes')(app);
 
-app.listen(app.get('port'), function() {
-  console.log('Express server listening on port ' + app.get('port'));
+app.listen(config.port, function() {
+  console.log('Express server listening on port ' + config.port);
 });
 
 module.exports = app;

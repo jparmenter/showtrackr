@@ -1,5 +1,6 @@
 {
   "extends": "../.jshintrc",
+  "expr": true,
   "globals": {
     "after": false,
     "afterEach": false,

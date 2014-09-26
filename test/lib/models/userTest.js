@@ -45,7 +45,7 @@ describe('User Model', function() {
     it('should return a match with correct password', function(done) {
       user1.save();
       user1.comparePassword('password', function(err, isMatch) {
-        isMatch.should.equal(true);
+        isMatch.should.be.true;
         done();
       });
     });
@@ -53,7 +53,7 @@ describe('User Model', function() {
     it('should fail with incorrect password', function(done) {
       user1.save();
       user1.comparePassword('fadew', function(err, isMatch) {
-        isMatch.should.equal(false);
+        isMatch.should.be.false;
         done();
       });
     });
