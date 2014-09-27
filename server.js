@@ -6,7 +6,7 @@
 var express = require('express');
 var fs = require('fs');
 var mongoose = require('mongoose');
-
+var passport = require('passport');
 /*
 * Main application entry file.
 * Please note that the order of loading is important
@@ -40,11 +40,11 @@ var walkModels = function(path) {
 };
 walkModels(modelsPath);
 
-// require('./config/passport')(passport);
+require('./lib/config/passport')(passport);
 
 var app = express();
 
-require('./lib/config/express')(app);
+require('./lib/config/express')(app, passport);
 require('./lib/config/routes')(app);
 
 app.listen(config.port, function() {
