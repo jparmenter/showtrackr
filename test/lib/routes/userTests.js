@@ -3,7 +3,8 @@ var request = require('supertest');
 var app = require('../../../server');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
-var should = require('should');
+// var should =
+require('should');
 
 var user;
 describe('Show Routes', function() {
@@ -13,8 +14,7 @@ describe('Show Routes', function() {
       email: 'default@gmail.com',
       password: 'password'
     });
-
-    user.save(done);
+    done();
   });
 
   describe('/api/signup', function() {
@@ -22,9 +22,22 @@ describe('Show Routes', function() {
       request(app)
         .post('/api/signup')
         .send({ email: user.email, password: user.password })
-        .end(function(err) {
-          should.not.exist(err);
-          User.count().should.equal(1);
+        .expect(200)
+        .end(function() {
+          User.find({}, function(err, users) {
+            users.should.have.length(1);
+          });
+          done();
+        });
+    });
+
+    it('POST - should not create a user that already exists', function(done) {
+      user.save();
+      request(app)
+        .post('/api/signup')
+        .send({ email: user.email, password: user.password })
+        .expect(500)
+        .end(function() {
           done();
         });
     });
