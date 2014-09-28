@@ -9,6 +9,7 @@ var show;
 describe('Show Routes', function() {
 
   before(function(done) {
+    Show.remove().exec();
     show = new Show({
       _id: 1,
       name: 'TV series',
@@ -137,10 +138,5 @@ describe('Show Routes', function() {
           done();
         });
     });
-  });
-
-  after(function(done) {
-    Show.remove().exec();
-    done();
   });
 });

@@ -7,6 +7,7 @@ var express = require('express');
 var fs = require('fs');
 var mongoose = require('mongoose');
 var passport = require('passport');
+
 /*
 * Main application entry file.
 * Please note that the order of loading is important

@@ -7,6 +7,7 @@ var show1, show2;
 describe('Show Model', function() {
 
   before(function(done) {
+    Show.remove().exec();
     show1 = new Show({
       _id: 1,
       name: 'TV series',
@@ -59,10 +60,5 @@ describe('Show Model', function() {
         done();
       });
     });
-  });
-
-  after(function(done) {
-    Show.remove().exec();
-    done();
   });
 });

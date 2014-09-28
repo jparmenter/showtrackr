@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="stylesheets/style.css">
   </head>
   <body>
-    <div class="navbar navbar-default navbar-static-top" role="navigation" bs-navbar>
+    <div ng-controller="NavbarCtrl as vm" class="navbar navbar-default navbar-static-top" role="navigation" bs-navbar>
       <div class="navbar-header">
         <a href="/" class="navbar-brand">
           <span class="glyphicon glyphicon-film"></span>
@@ -25,10 +25,10 @@
         <li data-match-route="/login"><a href="/login">Login</a></li>
         <li data-match-route="/signup"><a href="/signup">Sign up</a></li>
       </ul>
-      <!-- <ul class="nav navbar-nav pull-right" ng-if="currentUser">
+      <ul class="nav navbar-nav pull-right" ng-if="currentUser">
         <li class="navbar-text" ng-bind="currentUser.email"></li>
-        <li><a href="javascript:void(0)" ng-click="logout()">Logout</a></li>
-      </ul> -->
+        <li><a href="javascript:void(0)" ng-click="vm.logout()">Logout</a></li>
+      </ul>
     </div>
     <div ng-view></div>
 
@@ -43,8 +43,13 @@
     <script src="javascripts/app.js"></script>
     <script src="javascripts/controllers/add.js"></script>
     <script src="javascripts/controllers/detail.js"></script>
+    <script src="javascripts/controllers/login.js"></script>
+    <script src="javascripts/controllers/navbar.js"></script>
+    <script src="javascripts/controllers/signup.js"></script>
     <script src="javascripts/controllers/main.js"></script>
+    <script scr="javascripts/directives/repeatPassword.js"></script>
     <script src="javascripts/filters/fromNow.js"></script>
+    <script src="javascripts/services/auth.js"></script>
     <script src="javascripts/services/show.js"></script>
     <script src="javascripts/services/subscription.js"></script>
   </body>

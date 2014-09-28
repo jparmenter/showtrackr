@@ -7,6 +7,7 @@ var user1, user2;
 describe('User Model', function() {
 
   before(function(done) {
+    User.remove().exec();
     user1 = new User({
       email: 'user@web.com',
       password: 'password'
@@ -57,10 +58,5 @@ describe('User Model', function() {
         done();
       });
     });
-  });
-
-  after(function(done) {
-    User.remove().exec();
-    done();
   });
 });
