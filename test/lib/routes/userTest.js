@@ -1,10 +1,10 @@
 'use strict';
-var request = require('supertest');
+var supertest = require('supertest');
 var app = require('../../../server');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var should = require('should');
-var agent = request.agent(app);
+var request = supertest(app);
 
 var user;
 describe('Show Routes', function() {
@@ -20,7 +20,7 @@ describe('Show Routes', function() {
 
   describe('/api/signup', function() {
     it('POST - create a user', function(done) {
-      request(app)
+      request
         .post('/api/signup')
         .send({ email: 'newemail@gmail.com', password: 'password' })
         .expect(200)
@@ -33,7 +33,7 @@ describe('Show Routes', function() {
     });
 
     it('POST - should not create a user that already exists', function(done) {
-      request(app)
+      request
         .post('/api/signup')
         .send({ email: user.email, password: user.password } )
         .expect(500)
@@ -45,9 +45,9 @@ describe('Show Routes', function() {
   });
 
   describe('/api/login', function() {
-
     it('POST - should return a user with correct params', function(done) {
-      agent
+      var agent1 = supertest.agent(app);
+      agent1
         .post('/api/login')
         .send({ email: user.email, password: user.password })
         .expect(200)
@@ -60,21 +60,22 @@ describe('Show Routes', function() {
   });
 
   describe('/api/logout', function() {
-    beforeEach(function(done) {
-      user.save();
-      agent
-        .post('/api/login')
-        .send({ email: user.email, password: user.password })
-        .expect(200)
-        .end(function(err, res) {
-          should.not.exist(err);
-          console.log(res.headers['set-cookie']);
-          done();
-        });
-    });
+    // beforeEach(function(done) {
+    //   user.save();
+    //   request
+    //     .post('/api/login')
+    //     .send({ email: user.email, password: user.password })
+    //     .expect(200)
+    //     .end(function(err, res) {
+    //       should.not.exist(err);
+    //       console.log(res.headers['set-cookie']);
+    //       done();
+    //     });
+    // });
 
     it('GET - should return 200', function(done) {
-      agent
+      var agent1 = supertest.agent(app);
+      agent1
         .get('/api/logout')
         .expect(200)
         .end(function(err, res) {

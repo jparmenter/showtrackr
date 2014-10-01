@@ -30,6 +30,11 @@ module.exports = function(grunt) {
       },
       src: ['test/lib/**/*.js']
     },
+    karma: {
+      unit: {
+        configFile: 'test/client/karma.conf.js'
+      }
+    },
     env: {
       test: {
         NODE_ENV: 'test'
@@ -57,6 +62,6 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('test', ['jshint', 'env:test', 'mochaTest']);
+  grunt.registerTask('test', ['jshint', 'env:test', 'mochaTest', 'karma:unit']);
   grunt.registerTask('build', ['less:development']);
 };
