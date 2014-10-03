@@ -14,7 +14,7 @@ var passport = require('passport');
 */
 
 // load configurations
-process.env.NODE_ENV = process.env.NODE_ENV || 'test';
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 // system variables
 var config = require('./lib/config/config');
@@ -48,8 +48,7 @@ var app = express();
 require('./lib/config/express')(app, passport);
 require('./lib/config/routes')(app);
 
-app.listen(config.port, function() {
-  console.log('Express server listening on port ' + config.port);
-});
+app.listen(config.port);
+console.log('Express server listening on port ' + config.port);
 
 module.exports = app;

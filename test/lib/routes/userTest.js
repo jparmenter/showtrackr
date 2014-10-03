@@ -53,7 +53,8 @@ describe('Show Routes', function() {
         .expect(200)
         .end(function(err, res) {
           should.not.exist(err);
-          res.body.should.exist;
+          res.body.email.should.exist;
+          res.body.password.should.exist;
           done();
         });
     });
