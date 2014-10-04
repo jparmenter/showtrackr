@@ -4,7 +4,7 @@
       <div class="media">
         <div class="pull-left">
           <img ng-src="{{vm.show.poster}}" class="media-object img-rounded">
-          <div class="text-center" ng-if="vm.currentUser">
+          <div class="text-center" ng-if="currentUser">
             <div ng-show="!vm.isSubscribed()">
               <button ng-click="vm.subscribe()" class="btn btn-block btn-success">
                 <span class="glyphicon glyphicon-plus"></span> Subscribe
@@ -16,8 +16,8 @@
               </button>
             </div>
           </div>
-          <div class="text-center" ng-if="!vm.currentUser">
-            <a href="#/login" class="btn btn-block btn-primary">Login to Subscribe</a>
+          <div class="text-center" ng-if="!currentUser">
+            <a href="/login" class="btn btn-block btn-primary">Login to Subscribe</a>
           </div>
         </div>
         <div class="media-body">
@@ -25,12 +25,12 @@
             {{vm.show.name}}
             <span class="pull-right text-danger">{{vm.show.rating}}</span>
           </h2>
-          <h4 ng-show="show.status === 'Continuing'">
+          <h4 ng-show="vm.show.status === 'Continuing'">
             <span class="glyphicon glyphicon-calendar text-danger"></span>
             {{vm.show.airsDayOfWeek}} <em>{{vm.show.airsTime}}</em> on
             {{vm.show.network}}
           </h4>
-          <h4>
+          <h4 ng-show="vm.show.status === 'Ended'">
             Status: <span class="text-danger">Ended</span>
           </h4>
           <p>{{vm.show.overview}}</p>

@@ -30,11 +30,11 @@ describe('Subscribe Routes', function() {
   });
 
   describe('GET /api/subscribe', function() {
-    it('should return 500 when not authenticated', function(done) {
+    it('should return 401 when not authenticated', function(done) {
       request
         .post('/api/subscribe')
         .send({ showId: show._id })
-        .expect(500)
+        .expect(401)
         .end(function(err) {
           should.not.exist(err);
           done();
@@ -42,11 +42,11 @@ describe('Subscribe Routes', function() {
     });
   });
   describe('GET /api/unsubscribe', function() {
-    it('should return 500 when not authenticated', function(done) {
+    it('should return 401 when not authenticated', function(done) {
       request
         .post('/api/unsubscribe')
         .send({ showId: show._id })
-        .expect(500)
+        .expect(401)
         .end(function(err) {
           should.not.exist(err);
           done();
