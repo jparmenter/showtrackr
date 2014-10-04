@@ -2,7 +2,8 @@
 
 (function() {
   function Auth($http, $location, $rootScope, $cookieStore, $alert) {
-    $rootScope.currentUser = window.user;
+    $rootScope.currentUser = $cookieStore.get('user');
+    $cookieStore.remove('user');
 
     return{
       login: function(user) {

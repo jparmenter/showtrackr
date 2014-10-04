@@ -8,7 +8,6 @@ var request = supertest(app);
 
 var user;
 describe('Show Routes', function() {
-
   before(function(done) {
     User.remove().exec();
     user = new User({
@@ -45,18 +44,29 @@ describe('Show Routes', function() {
   });
 
   describe('/api/login', function() {
-    it('POST - should return a user with correct params', function(done) {
-      var agent1 = supertest.agent(app);
-      agent1
+    // it('POST - should return a user with correct params', function(done) {
+    //   var agent1 = supertest.agent(app);
+    //   agent1
+    //     .post('/api/login')
+    //     .send({ email: user.email, password: user.password })
+    //     .expect(200)
+    //     .end(function(err, res) {
+    //       should.not.exist(err);
+    //       res.body.email.should.exist;
+    //       res.body.password.should.exist;
+    //       done();
+    //     });
+    // });
+
+    it('POST - should 401 when not authenticated', function(done) {
+      var agent = supertest.agent(app);
+      agent
         .post('/api/login')
-        .send({ email: user.email, password: user.password })
-        .expect(200)
-        .end(function(err, res) {
-          should.not.exist(err);
-          res.body.email.should.exist;
-          res.body.password.should.exist;
-          done();
-        });
+          .send({ email: user.email, password: 'pass' })
+          .expect(401)
+          .end(function() {
+            done();
+          });
     });
   });
 
@@ -78,10 +88,9 @@ describe('Show Routes', function() {
       var agent1 = supertest.agent(app);
       agent1
         .get('/api/logout')
-        .expect(200)
-        .end(function(err, res) {
+        .expect(401)
+        .end(function(err) {
           should.not.exist(err);
-          console.log(res.headers['set-cookie']);
           done();
         });
     });
