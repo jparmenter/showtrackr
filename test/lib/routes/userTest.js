@@ -5,8 +5,9 @@ var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var should = require('should');
 var request = supertest(app);
+var agent = supertest.agent(app);
 
-var user;
+var user, agent;
 describe('Show Routes', function() {
   before(function(done) {
     User.remove().exec();
@@ -34,7 +35,7 @@ describe('Show Routes', function() {
     it('POST - should not create a user that already exists', function(done) {
       request
         .post('/api/signup')
-        .send({ email: user.email, password: user.password } )
+        .send({ email: user.email, password: 'password' } )
         .expect(500)
         .end(function(err) {
           should.not.exist(err);
@@ -44,49 +45,44 @@ describe('Show Routes', function() {
   });
 
   describe('/api/login', function() {
-    // it('POST - should return a user with correct params', function(done) {
-    //   var agent1 = supertest.agent(app);
-    //   agent1
-    //     .post('/api/login')
-    //     .send({ email: user.email, password: user.password })
-    //     .expect(200)
-    //     .end(function(err, res) {
-    //       should.not.exist(err);
-    //       res.body.email.should.exist;
-    //       res.body.password.should.exist;
-    //       done();
-    //     });
-    // });
+    it('POST - should return a user with correct params', function(done) {
+      agent
+        .post('/api/login')
+        .send({ email: user.email, password: 'password' })
+        .expect(200)
+        .end(function(err, res) {
+          should.not.exist(err);
+          res.body.email.should.exist;
+          res.body.password.should.exist;
+          done();
+        });
+    });
 
     it('POST - should 401 when not authenticated', function(done) {
-      var agent = supertest.agent(app);
-      agent
+      request
         .post('/api/login')
           .send({ email: user.email, password: 'pass' })
           .expect(401)
-          .end(function() {
+          .end(function(err) {
+            should.not.exist(err);
             done();
           });
     });
   });
 
   describe('/api/logout', function() {
-    // beforeEach(function(done) {
-    //   user.save();
-    //   request
-    //     .post('/api/login')
-    //     .send({ email: user.email, password: user.password })
-    //     .expect(200)
-    //     .end(function(err, res) {
-    //       should.not.exist(err);
-    //       console.log(res.headers['set-cookie']);
-    //       done();
-    //     });
-    // });
+    it('GET - should return 200', function(done) {
+      agent
+        .get('/api/logout')
+        .expect(200)
+        .end(function(err) {
+          should.not.exist(err);
+          done();
+        });
+    });
 
     it('GET - should return 200', function(done) {
-      var agent1 = supertest.agent(app);
-      agent1
+      request
         .get('/api/logout')
         .expect(401)
         .end(function(err) {

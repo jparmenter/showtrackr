@@ -51,4 +51,4 @@ require('./lib/config/routes')(app);
 app.listen(config.port);
 console.log('Express server listening on port ' + config.port);
 
-module.exports = app;
+exports = module.exports = app;
