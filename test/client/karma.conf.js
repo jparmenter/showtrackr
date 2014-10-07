@@ -14,11 +14,11 @@ module.exports = function(config) {
       'public/bower_components/angular-cookies/angular-cookies.js',
       'public/bower_components/angular-mocks/angular-mocks.js',
       'public/bower_components/moment/moment.js',
-      'public/javascripts/app.js',
-      'public/javascripts/controllers/*.js',
-      'public/javascripts/directives/repeatPassword.js',
-      'public/javascripts/filters/fromNow.js',
-      'public/javascripts/services/*.js',
+      'public/js/app.js',
+      'public/js/controllers/*.js',
+      'public/js/directives/repeatPassword.js',
+      'public/js/filters/fromNow.js',
+      'public/js/services/*.js',
       'test/client/unit/**/*.js'
     ],
     reporters: ['spec'],
@@ -29,5 +29,5 @@ module.exports = function(config) {
     browsers: ['PhantomJS'],
     captureTimeout: 60000,
     singleRun: true
-  })
-}
+  });
+};

@@ -5,7 +5,7 @@
 
     beforeEach(module('showtrackr'));
 
-    var scope, MainCtrl, Auth;
+    var scope, MainCtrl;//, Auth;
 
     beforeEach(inject(function($controller, $rootScope) {
       scope = $rootScope.$new();

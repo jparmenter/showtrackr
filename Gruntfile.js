@@ -5,24 +5,56 @@ module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt);
 
   grunt.initConfig({
+    watch: {
+      options: {
+        livereload: true
+      },
+      html: {
+        files: ['/public/views/**']
+      },
+      js: {
+        files: ['gruntfile.js', 'server.js', 'lib/**/*.js', 'public/js/**', 'test/lib/**/*.js', 'test/client/**/*.js'],
+        tasks: ['jshint']
+      },
+      css: {
+        files: ['public/less/*.less'],
+        tasks: ['less']
+      }
+    },
     jshint: {
       options: {
-        jshintrc: '.jshintrc',
+        jshintrc: true,
         reporter: require('jshint-stylish')
       },
-      client: {
-        options : {
-          jshintrc: 'public/javascripts/.jshintrc'
-        },
-        src: ['public/javascripts/**/*.js']
-      },
-      test: {
+      all: [
+      'Gruntfile.js',
+      'server.js',
+      'lib/**/*.js',
+      'public/js/**/*.js',
+      'test/client/**/*.js',
+      'test/lib/**/*.js'
+      ]
+    },
+    nodemon: {
+      dev: {
+        script: 'server.js',
         options: {
-          jshintrc: 'test/.jshintrc'
-        },
-        src: ['test/lib/**/*.js']
-      },
-      all: ['Gruntfile.js', 'server.js', 'lib/**/*.js']
+          args: [],
+          ignoredFiles: ['public/**'],
+          watchedExtensions: ['js'],
+          delayTime: 1,
+          env: {
+            PORT: 3000
+          },
+          cwd: __dirname
+        }
+      }
+    },
+    concurrent: {
+      tasks: ['nodemon', 'watch'],
+      options: {
+        logConcurrentOutput: true
+      }
     },
     mochaTest: {
       options: {
@@ -43,25 +75,25 @@ module.exports = function(grunt) {
     less: {
       development: {
         files: {
-          'public/stylesheets/style.css': 'public/stylesheets/less/style.less'
+          'public/css/style.css': 'public/less/style.less'
         }
-      },
-      production: {
-        options: {
-          paths: ['assets/css'],
-          cleancss: true,
-          modifyVars: {
-            imgPath: 'http://mycdn.com/path/to/images',
-            bgColor: 'red'
-          }
-        },
-        files: {
-          'path/to/result.css': 'path/to/source.less'
-        }
+      // },
+      // production: {
+      //   options: {
+      //     paths: ['assets/css'],
+      //     cleancss: true,
+      //     modifyVars: {
+      //       imgPath: 'http://mycdn.com/path/to/images',
+      //       bgColor: 'red'
+      //     }
+      //   },
+      //   files: {
+      //     'path/to/result.css': 'path/to/source.less'
+      //   }
       }
     }
   });
 
   grunt.registerTask('test', ['jshint', 'env:test', 'mochaTest', 'karma:unit']);
-  grunt.registerTask('build', ['less:development']);
+  grunt.registerTask('default', ['jshint', 'concurrent', 'less:development']);
 };
