@@ -1,31 +1,29 @@
 'use strict';
 (function() {
-  function MainCtrl(Show) {
-    var vm = this;
-    vm.alphabet = ['0-9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
+  function MainCtrl($scope, Show) {
+    $scope.alphabet = ['0-9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
       'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
       'U', 'V', 'W', 'X', 'Y', 'Z'];
 
-    vm.genres = ['Action', 'Adventure', 'Animation', 'Children', 'Comedy',
+    $scope.genres = ['Action', 'Adventure', 'Animation', 'Children', 'Comedy',
       'Crime', 'Documentary', 'Drama', 'Family', 'Fantasy', 'Food', 'Home and Garden',
       'Horror', 'Mini-Series', 'Mystery', 'News', 'Reality', 'Romance', 'Sci-Fi', 'Sport',
       'Suspense', 'Talk Show', 'Thriller', 'Travel'];
 
-    vm.headingTitle = 'Top 12 Shows';
-    vm.shows = Show.query();
+    $scope.shows = Show.query();
 
-    vm.filterByGenre = function(genre) {
-      vm.shows = Show.query({ genre: genre });
-      vm.headingTitle = genre;
+    $scope.filterByGenre = function(genre) {
+      $scope.shows = Show.query({ genre: genre });
+      $scope.headingTitle = genre;
     };
 
-    vm.filterByAlphabet = function(char) {
-      vm.shows = Show.query({ alphabet: char });
-      vm.headingTitle = char;
+    $scope.filterByAlphabet = function(char) {
+      $scope.shows = Show.query({ alphabet: char });
+      $scope.headingTitle = char;
     };
   }
 
-  MainCtrl.$inject = ['Show'];
+  MainCtrl.$inject = ['$scope', 'Show'];
   angular
     .module('showtrackr')
     .controller('MainCtrl', MainCtrl);
