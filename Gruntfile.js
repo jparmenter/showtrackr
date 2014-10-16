@@ -70,6 +70,10 @@ module.exports = function(grunt) {
     env: {
       test: {
         NODE_ENV: 'test'
+      },
+      coverage: {
+        NODE_ENV: 'test',
+        APP_SIR_FOR_CODE_COVERAGE: '../test/coverage/instrument/app/'
       }
     },
     less: {
@@ -91,9 +95,36 @@ module.exports = function(grunt) {
       //     'path/to/result.css': 'path/to/source.less'
       //   }
       }
+    },
+    clean: {
+      coverage: {
+        src: ['test/coverage/']
+      }
+    },
+    instrument: {
+      files: 'lib/**/*.js',
+      options: {
+        lazy: true,
+        basePath: 'test/coverage/instrument'
+      }
+    },
+    storeCoverage: {
+      options: {
+        dir: 'test/coverage/reports'
+      }
+    },
+    makeReport: {
+      src: 'test/coverage/reports/**/*.json',
+      options: {
+        type: 'locv',
+        dir: 'test/coverage/reports',
+        print: 'detail'
+      }
     }
   });
 
   grunt.registerTask('test', ['jshint', 'env:test', 'mochaTest', 'karma:unit']);
   grunt.registerTask('default', ['jshint', 'concurrent', 'less:development']);
+  grunt.registerTask('coverage', ['jshint', 'clean', 'env:coverage', 'instrument',
+    'mochaTest', 'storeCoverage', 'makeReport']);
 };

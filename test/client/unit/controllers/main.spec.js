@@ -5,14 +5,18 @@
 
     beforeEach(module('showtrackr'));
 
-    var scope, MainCtrl;//, Auth;
+    var MainCtrl,
+        scope,
+        $httpBackend;
 
-    beforeEach(inject(function($controller, $rootScope) {
+    beforeEach(inject(function($controller, $rootScope, _$httpBackend_) {
       scope = $rootScope.$new();
 
       MainCtrl = $controller('MainCtrl',  {
         $scope: scope
       });
+
+      $httpBackend = _$httpBackend_;
     }));
 
     it('should have a MainCtrl controller', function() {
@@ -25,6 +29,22 @@
 
     it('should have a genre with a length of 24', function() {
       expect(scope.genres.length).toBe(24);
+    });
+
+    it('should have a heading title default as Top 12 Shows', function() {
+      expect(scope.headingTitle).toBe('Top 12 Shows');
+    });
+
+    it('should have shows', function() {
+        var showData = [
+        {_id: '1', title: 'TV 1'},
+        {_id: '2', title: 'TV 2'}
+        ];
+
+      $httpBackend.expectGET(/api\/shows/).respond(showData);
+
+      $httpBackend.flush();
+      expect(scope.shows.length).toBe(2);
     });
   });
 })();

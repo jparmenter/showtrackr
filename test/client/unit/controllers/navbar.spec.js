@@ -5,12 +5,7 @@
 //
 //     beforeEach(module('showtrackr'));
 //
-//     var scope, NavbarCtrl, Auth;
-//
-//     beforeEach(function() {
-//       var mockAuth = {};
-//       //module('showtrackr', function())
-//     });
+//     var scope, NavbarCtrl;
 //
 //     beforeEach(inject(function($controller, $rootScope) {
 //       scope = $rootScope.$new();
